@@ -992,8 +992,7 @@ export default function App() {
                 {/* Social Links */}
                 <div className="flex items-center space-x-6">
                   {[
-                    { icon: Linkedin, url: 'https://www.linkedin.com/in/naveen-raja-s-80282023a/', label: 'LinkedIn' },
-                    { icon: 'Behance', url: 'https://www.behance.net/naveen_sajaltech', label: 'Behance' }
+                    { icon: Linkedin, url: 'https://www.linkedin.com/company/sajaltech/', label: 'LinkedIn' }
                   ].map((social) => (
                     <motion.a
                       key={social.label}
@@ -1240,25 +1239,13 @@ export default function App() {
             <div className="flex items-center space-x-6 px-6 py-3 rounded-full glass border-indigo-500/20 dark:border-white/10 shadow-2xl pointer-events-auto backdrop-blur-2xl">
               <div className="flex items-center space-x-6">
                 <motion.a
-                  href="https://www.linkedin.com/in/naveen-raja-s-80282023a/"
+                  href="https://www.linkedin.com/company/sajaltech/"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ y: -3, scale: 1.1 }}
                   className="text-slate-700 dark:text-slate-400 hover:text-indigo-400 transition-colors"
                 >
                   <Linkedin size={20} strokeWidth={1.5} />
-                </motion.a>
-                
-                <motion.a
-                  href="https://www.behance.net/naveen_sajaltech"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -3, scale: 1.1 }}
-                  className="text-slate-700 dark:text-slate-400 hover:text-indigo-400 transition-colors"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                    <path d="M3 18v-12h4.5a3 3 0 0 1 0 6a3 3 0 0 1 0 6h-4.5" /><path d="M3 12l4.5 0" /><path d="M14 13h7a3.5 3.5 0 0 0 -7 0v2a3.5 3.5 0 0 0 6.64 1" /><path d="M16 6l3 0" />
-                  </svg>
                 </motion.a>
               </div>
             </div>
