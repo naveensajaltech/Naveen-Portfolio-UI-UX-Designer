@@ -858,19 +858,6 @@ export default function App() {
             ))}
           </div>
 
-          {/* Resume Button */}
-          <motion.a
-            href="https://drive.google.com/file/d/1fCFO7fBr8GW7ZNR2Dgq8VTXW3TnLnNw0/view?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center space-x-2 rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-600 dark:text-indigo-500 border border-indigo-500/30"
-          >
-            <Download className="h-3 w-3" />
-            <span className="hidden sm:inline">Resume</span>
-          </motion.a>
-
           {/* Theme Toggle */}
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
