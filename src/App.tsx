@@ -695,67 +695,73 @@ export default function App() {
   return (
     <div className={`relative min-h-screen w-full transition-colors duration-700 font-sans ${isDarkMode ? 'bg-navy-950 text-slate-200' : 'bg-slate-50 text-slate-900'}`}>
       {/* Background Elements */}
-      <div className="noise" />
+      {!isMobile && <div className="noise" />}
       <div className="grid-bg fixed inset-0 z-0 opacity-20" />
       
       {/* Floating Micro Design Elements */}
-      <FloatingIcon icon={Layout} delay={0} x="12%" y="15%" size={40} duration={15} />
-      <FloatingIcon icon={Type} delay={2} x="85%" y="12%" size={32} duration={18} />
-      <FloatingIcon icon={MousePointer2} delay={4} x="8%" y="65%" size={28} duration={14} />
-      <FloatingIcon icon={Layers} delay={1} x="88%" y="70%" size={44} duration={20} />
-      <FloatingIcon icon={PenTool} delay={3} x="75%" y="55%" size={36} duration={16} />
-      <FloatingIcon icon={Palette} delay={5} x="22%" y="75%" size={30} duration={19} />
-      <FloatingIcon icon={MonitorSmartphone} delay={1.5} x="45%" y="8%" size={38} duration={22} />
-      <FloatingIcon icon={Smartphone} delay={3.5} x="5%" y="40%" size={34} duration={17} />
-      <FloatingIcon icon={Monitor} delay={0.5} x="92%" y="35%" size={42} duration={25} />
-      <FloatingIcon icon={Grid} delay={2.5} x="35%" y="85%" size={26} duration={13} />
-      <FloatingIcon icon={Figma} delay={4.5} x="65%" y="88%" size={32} duration={21} />
-      <FloatingIcon icon={Network} delay={1} x="18%" y="45%" size={24} duration={15} />
-      <FloatingIcon icon={User} delay={2.5} x="55%" y="25%" size={22} duration={19} />
+      {!isMobile && (
+        <>
+          <FloatingIcon icon={Layout} delay={0} x="12%" y="15%" size={40} duration={15} />
+          <FloatingIcon icon={Type} delay={2} x="85%" y="12%" size={32} duration={18} />
+          <FloatingIcon icon={MousePointer2} delay={4} x="8%" y="65%" size={28} duration={14} />
+          <FloatingIcon icon={Layers} delay={1} x="88%" y="70%" size={44} duration={20} />
+          <FloatingIcon icon={PenTool} delay={3} x="75%" y="55%" size={36} duration={16} />
+          <FloatingIcon icon={Palette} delay={5} x="22%" y="75%" size={30} duration={19} />
+          <FloatingIcon icon={MonitorSmartphone} delay={1.5} x="45%" y="8%" size={38} duration={22} />
+          <FloatingIcon icon={Smartphone} delay={3.5} x="5%" y="40%" size={34} duration={17} />
+          <FloatingIcon icon={Monitor} delay={0.5} x="92%" y="35%" size={42} duration={25} />
+          <FloatingIcon icon={Grid} delay={2.5} x="35%" y="85%" size={26} duration={13} />
+          <FloatingIcon icon={Figma} delay={4.5} x="65%" y="88%" size={32} duration={21} />
+          <FloatingIcon icon={Network} delay={1} x="18%" y="45%" size={24} duration={15} />
+          <FloatingIcon icon={User} delay={2.5} x="55%" y="25%" size={22} duration={19} />
+        </>
+      )}
 
       {/* Additional Subtle Background Animations */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ 
-              opacity: 0, 
-              x: Math.random() * 100 + "%", 
-              y: Math.random() * 100 + "%",
-              scale: Math.random() * 0.5 + 0.5
-            }}
+      {!isMobile && (
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ 
+                opacity: 0, 
+                x: Math.random() * 100 + "%", 
+                y: Math.random() * 100 + "%",
+                scale: Math.random() * 0.5 + 0.5
+              }}
+              animate={{ 
+                y: [null, "-100vh"],
+                opacity: [0, 0.1, 0],
+                rotate: [0, 360]
+              }}
+              transition={{ 
+                duration: 15 + Math.random() * 20, 
+                repeat: Infinity, 
+                ease: "linear",
+                delay: Math.random() * 20
+              }}
+              className="absolute w-px h-20 bg-gradient-to-b from-indigo-500/20 to-transparent"
+            />
+          ))}
+          
+          <motion.div 
             animate={{ 
-              y: [null, "-100vh"],
-              opacity: [0, 0.1, 0],
-              rotate: [0, 360]
+              scale: [1, 1.2, 1],
+              opacity: [0.05, 0.1, 0.05]
             }}
-            transition={{ 
-              duration: 15 + Math.random() * 20, 
-              repeat: Infinity, 
-              ease: "linear",
-              delay: Math.random() * 20
-            }}
-            className="absolute w-px h-20 bg-gradient-to-b from-indigo-500/20 to-transparent"
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px]"
           />
-        ))}
-        
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.05, 0.1, 0.05]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px]"
-        />
-        <motion.div 
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            opacity: [0.03, 0.08, 0.03]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px]"
-        />
-      </div>
+          <motion.div 
+            animate={{ 
+              scale: [1.2, 1, 1.2],
+              opacity: [0.03, 0.08, 0.03]
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px]"
+          />
+        </div>
+      )}
 
       {/* Radial Glow */}
       <div 
@@ -768,95 +774,91 @@ export default function App() {
       />
 
       {/* Custom Cursor Glow */}
-      <motion.div
-        className="pointer-events-none fixed z-50 h-96 w-96 rounded-full bg-indigo-500/10 blur-[120px]"
-        animate={{
-          x: mousePos.x - 192,
-          y: mousePos.y - 192,
-        }}
-        transition={{ type: 'spring', damping: 40, stiffness: 150, mass: 0.8 }}
-      />
+      {!isMobile && (
+        <motion.div
+          className="pointer-events-none fixed z-50 h-96 w-96 rounded-full bg-indigo-500/10 blur-[120px]"
+          animate={{
+            x: mousePos.x - 192,
+            y: mousePos.y - 192,
+          }}
+          transition={{ type: 'spring', damping: 40, stiffness: 150, mass: 0.8 }}
+        />
+      )}
 
       {/* Enhanced Global Background Floating Elements */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        {/* Large Ambient Glows */}
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 blur-[120px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-500/10 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
-        
-        {/* Abstract UI Shapes */}
-        {!isMobile && (
-          <>
-            <motion.div 
-              animate={{ 
-                y: [0, -60, 0],
-                x: [0, 40, 0],
-                rotate: [0, 20, 0],
-                opacity: [0.1, 0.3, 0.1]
-              }}
-              transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[10%] left-[5%] w-96 h-96 border border-indigo-500/30 rounded-[4rem] rotate-12 gpu"
-            />
-            <motion.div 
-              animate={{ 
-                y: [0, 70, 0],
-                x: [0, -50, 0],
-                rotate: [0, -25, 0],
-                opacity: [0.1, 0.2, 0.1]
-              }}
-              transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute bottom-[15%] right-[10%] w-[30rem] h-[30rem] border border-purple-500/20 rounded-full gpu"
-            />
-          </>
-        )}
-        
-        {/* Floating Icons representing UI/UX Tools & Concepts */}
-        <div className="absolute inset-0">
-          {(isMobile ? [
-            { Icon: Layout, top: '15%', left: '20%', delay: 0, size: 48 },
-            { Icon: MousePointer2, top: '35%', left: '85%', delay: 1.5, size: 36 },
-            { Icon: Monitor, top: '45%', left: '5%', delay: 1, size: 52 },
-          ] : [
-            { Icon: Layout, top: '15%', left: '20%', delay: 0, size: 48 },
-            { Icon: Smartphone, top: '70%', left: '10%', delay: 3, size: 40 },
-            { Icon: MousePointer2, top: '35%', left: '85%', delay: 1.5, size: 36 },
-            { Icon: Palette, top: '80%', left: '75%', delay: 4.5, size: 44 },
-            { Icon: Layers, top: '10%', left: '80%', delay: 2.5, size: 42 },
-            { Icon: Grid, top: '90%', left: '25%', delay: 5, size: 38 },
-            { Icon: Monitor, top: '45%', left: '5%', delay: 1, size: 52 },
-            { Icon: PenTool, top: '25%', left: '90%', delay: 6, size: 34 },
-          ]).map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0 }}
-              animate={{ 
-                opacity: [0.3, 0.6, 0.3],
-                y: [0, isMobile ? -20 : -50, 0],
-                x: [0, Math.sin(i) * (isMobile ? 10 : 20), 0],
-                rotate: isMobile ? 0 : [0, 360, 0]
-              }}
-              transition={{ 
-                duration: isMobile ? 8 : 12 + i * 2, 
-                repeat: Infinity, 
-                ease: "easeInOut",
-                delay: item.delay 
-              }}
-              style={{ top: item.top, left: item.left }}
-              className="absolute text-indigo-500/50 drop-shadow-[0_0_10px_rgba(99,102,241,0.2)] gpu"
-            >
-              <item.Icon size={item.size} strokeWidth={1} />
-            </motion.div>
-          ))}
+      {!isMobile && (
+        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+          {/* Large Ambient Glows */}
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 blur-[120px] rounded-full animate-pulse" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-500/10 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+          
+          {/* Abstract UI Shapes */}
+          <motion.div 
+            animate={{ 
+              y: [0, -60, 0],
+              x: [0, 40, 0],
+              rotate: [0, 20, 0],
+              opacity: [0.1, 0.3, 0.1]
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[10%] left-[5%] w-96 h-96 border border-indigo-500/30 rounded-[4rem] rotate-12 gpu"
+          />
+          <motion.div 
+            animate={{ 
+              y: [0, 70, 0],
+              x: [0, -50, 0],
+              rotate: [0, -25, 0],
+              opacity: [0.1, 0.2, 0.1]
+            }}
+            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute bottom-[15%] right-[10%] w-[30rem] h-[30rem] border border-purple-500/20 rounded-full gpu"
+          />
+          
+          {/* Floating Icons representing UI/UX Tools & Concepts */}
+          <div className="absolute inset-0">
+            {[
+              { Icon: Layout, top: '15%', left: '20%', delay: 0, size: 48 },
+              { Icon: Smartphone, top: '70%', left: '10%', delay: 3, size: 40 },
+              { Icon: MousePointer2, top: '35%', left: '85%', delay: 1.5, size: 36 },
+              { Icon: Palette, top: '80%', left: '75%', delay: 4.5, size: 44 },
+              { Icon: Layers, top: '10%', left: '80%', delay: 2.5, size: 42 },
+              { Icon: Grid, top: '90%', left: '25%', delay: 5, size: 38 },
+              { Icon: Monitor, top: '45%', left: '5%', delay: 1, size: 52 },
+              { Icon: PenTool, top: '25%', left: '90%', delay: 6, size: 34 },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0 }}
+                animate={{ 
+                  opacity: [0.3, 0.6, 0.3],
+                  y: [0, -50, 0],
+                  x: [0, Math.sin(i) * 20, 0],
+                  rotate: [0, 360, 0]
+                }}
+                transition={{ 
+                  duration: 12 + i * 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut",
+                  delay: item.delay 
+                }}
+                style={{ top: item.top, left: item.left }}
+                className="absolute text-indigo-500/50 drop-shadow-[0_0_10px_rgba(99,102,241,0.2)] gpu"
+              >
+                <item.Icon size={item.size} strokeWidth={1} />
+              </motion.div>
+            ))}
+          </div>
+  
+          {/* Wireframe Grid Pattern */}
+          <svg width="100%" height="100%" className="absolute inset-0 opacity-[0.15]">
+            <pattern id="global-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-indigo-500" />
+              <circle cx="0" cy="0" r="1" fill="currentColor" className="text-indigo-400" />
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#global-grid)" />
+          </svg>
         </div>
-
-        {/* Wireframe Grid Pattern */}
-        <svg width="100%" height="100%" className="absolute inset-0 opacity-[0.15]">
-          <pattern id="global-grid" width="80" height="80" patternUnits="userSpaceOnUse">
-            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-indigo-500" />
-            <circle cx="0" cy="0" r="1" fill="currentColor" className="text-indigo-400" />
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#global-grid)" />
-        </svg>
-      </div>
+      )}
 
       {/* Navigation Bar */}
       <div className="fixed top-5 left-0 z-50 w-full px-6 md:px-10">
@@ -978,17 +980,17 @@ export default function App() {
         {activeTab === 'About' && (
           <motion.main
             key="about"
-            initial={{ opacity: 0, scale: 0.98 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center px-6 pt-32 pb-24"
+            exit={isMobile ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
+            transition={{ duration: isMobile ? 0.3 : 0.5, ease: "easeInOut" }}
+            className={`relative z-10 flex ${isMobile ? 'min-h-screen pt-24 pb-16' : 'h-screen pt-32 pb-24'} w-full flex-col items-center justify-center px-4 md:px-6`}
           >
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className={`${isDarkMode ? 'glass' : 'bg-white'} relative flex flex-col items-center max-w-5xl w-full py-6 md:py-10 px-8 md:px-16 rounded-[40px] text-center overflow-hidden shadow-2xl shadow-indigo-500/10 dark:shadow-black/40 group border border-indigo-500/20 dark:border-white/10 gpu`}
+              className={`${isDarkMode ? 'glass' : 'bg-white'} relative flex flex-col items-center max-w-5xl w-full py-10 md:py-10 px-6 md:px-16 rounded-[32px] md:rounded-[40px] text-center overflow-hidden shadow-2xl shadow-indigo-500/10 dark:shadow-black/40 group border border-indigo-500/20 dark:border-white/10 gpu`}
             >
               {/* Liquid Glass Shine Effect on Border Strokes - Dark Mode Only */}
               {isDarkMode && !isMobile && (
@@ -1113,17 +1115,18 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="relative z-10 flex h-screen w-full overflow-hidden pt-20 pb-12 px-6 md:px-20 flex-col"
+            transition={{ duration: isMobile ? 0.3 : 0.5 }}
+            className={`relative z-10 flex ${isMobile ? 'min-h-screen pt-24 pb-12' : 'h-screen pt-20 pb-12'} w-full overflow-hidden px-4 md:px-20 flex-col`}
           >
             {/* Header */}
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-8 flex items-end justify-between"
+              className="mb-6 md:mb-8 flex items-end justify-between"
             >
               <div>
                 <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-indigo-500 mb-2">Portfolio</h2>
-                <h1 className={`text-3xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent ${isDarkMode ? 'bg-gradient-to-br from-white via-slate-200 to-slate-400' : 'bg-gradient-to-br from-[#625FFF] via-[#8B5CF6] to-[#D946EF]'}`}>Selected Works</h1>
+                <h1 className={`text-2xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent ${isDarkMode ? 'bg-gradient-to-br from-white via-slate-200 to-slate-400' : 'bg-gradient-to-br from-[#625FFF] via-[#8B5CF6] to-[#D946EF]'}`}>Selected Works</h1>
               </div>
               <div className="hidden md:block text-[10px] font-mono text-slate-400 uppercase tracking-[0.4em] font-medium">
                 Case Studies & Experiments
@@ -1131,8 +1134,8 @@ export default function App() {
             </motion.div>
 
             {/* Works Grid */}
-            <div className="flex-1 min-h-0 overflow-y-auto pr-2 custom-scrollbar">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
+            <div className={`flex-1 ${isMobile ? 'overflow-visible' : 'min-h-0 overflow-y-auto'} pr-2 custom-scrollbar`}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {projects.map((project, index) => (
                   <WorkCard key={project.title} project={project} index={index} isDarkMode={isDarkMode} isMobile={isMobile} />
                 ))}
@@ -1147,17 +1150,18 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="relative z-10 flex h-screen w-full overflow-hidden pt-20 pb-12 px-6 md:px-20 flex-col"
+            transition={{ duration: isMobile ? 0.3 : 0.5 }}
+            className={`relative z-10 flex ${isMobile ? 'min-h-screen pt-24 pb-12' : 'h-screen pt-20 pb-12'} w-full overflow-hidden px-4 md:px-20 flex-col`}
           >
             {/* Header */}
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-10 flex items-end justify-between"
+              className="mb-6 md:mb-10 flex items-end justify-between"
             >
               <div>
                 <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-indigo-500 mb-2">Capabilities</h2>
-                <h1 className={`text-3xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent ${isDarkMode ? 'bg-gradient-to-br from-white via-slate-200 to-slate-400' : 'bg-gradient-to-br from-[#625FFF] via-[#8B5CF6] to-[#D946EF]'}`}>Strategic Design</h1>
+                <h1 className={`text-2xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent ${isDarkMode ? 'bg-gradient-to-br from-white via-slate-200 to-slate-400' : 'bg-gradient-to-br from-[#625FFF] via-[#8B5CF6] to-[#D946EF]'}`}>Strategic Design</h1>
               </div>
               <div className="hidden md:block text-[10px] font-mono text-slate-400 uppercase tracking-[0.4em] font-medium">
                 Precision & Purpose
@@ -1165,10 +1169,10 @@ export default function App() {
             </motion.div>
 
             {/* Split Layout - Static (No Scroll) */}
-            <div className="flex-1 min-h-0 flex flex-col justify-center">
+            <div className={`flex-1 ${isMobile ? 'overflow-visible' : 'min-h-0 flex flex-col justify-center'}`}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 max-w-7xl mx-auto w-full">
                 {services.map((service, index) => (
-                  <div key={service.title} className="h-[180px] lg:h-[220px]">
+                  <div key={service.title} className={isMobile ? 'h-auto' : 'h-[180px] lg:h-[220px]'}>
                     <ServiceCard service={service} index={index} isDarkMode={isDarkMode} isMobile={isMobile} />
                   </div>
                 ))}
@@ -1183,7 +1187,8 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="relative z-10 flex h-screen w-full overflow-hidden pt-20 pb-12 px-6 md:px-20 flex-col"
+            transition={{ duration: isMobile ? 0.3 : 0.5 }}
+            className={`relative z-10 flex ${isMobile ? 'min-h-screen pt-24 pb-12' : 'h-screen pt-20 pb-12'} w-full overflow-hidden px-4 md:px-20 flex-col`}
           >
             {/* Section Specific Background Animation */}
             <div className="absolute inset-0 pointer-events-none z-0">
@@ -1222,7 +1227,7 @@ export default function App() {
             >
               <div>
                 <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-indigo-500 mb-2">Tech Stack</h2>
-                <h1 className={`text-3xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent ${isDarkMode ? 'bg-gradient-to-br from-white via-slate-200 to-slate-400' : 'bg-gradient-to-br from-[#625FFF] via-[#8B5CF6] to-[#D946EF]'}`}>Our Toolkit</h1>
+                <h1 className={`text-2xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent ${isDarkMode ? 'bg-gradient-to-br from-white via-slate-200 to-slate-400' : 'bg-gradient-to-br from-[#625FFF] via-[#8B5CF6] to-[#D946EF]'}`}>Our Toolkit</h1>
               </div>
               <div className="hidden md:block text-[10px] font-mono text-slate-400 uppercase tracking-[0.4em] font-medium">
                 Professional Software & Hardware
@@ -1230,10 +1235,10 @@ export default function App() {
             </motion.div>
 
             {/* Tools Grid - Optimized for Single Section (No Scroll) */}
-            <div className="flex-1 min-h-0 flex flex-col justify-center relative z-10">
+            <div className={`flex-1 ${isMobile ? 'overflow-visible' : 'min-h-0 flex flex-col justify-center'} relative z-10`}>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 lg:gap-6 max-w-6xl mx-auto w-full">
                 {tools.map((tool, index) => (
-                  <div key={tool.name} className="h-[160px] lg:h-[180px]">
+                  <div key={tool.name} className={isMobile ? 'h-auto' : 'h-[160px] lg:h-[180px]'}>
                     <ToolCard tool={tool} index={index} isDarkMode={isDarkMode} isMobile={isMobile} />
                   </div>
                 ))}
@@ -1245,26 +1250,29 @@ export default function App() {
         {activeTab === 'Contact' && (
           <motion.main
             key="contact"
-            initial={{ opacity: 0, y: 20 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center px-6 md:px-20 pt-32 pb-40"
+            exit={isMobile ? { opacity: 0 } : { opacity: 0, y: -20 }}
+            transition={{ duration: isMobile ? 0.3 : 0.5 }}
+            className={`relative z-10 flex ${isMobile ? 'min-h-screen pt-24 pb-24' : 'h-screen pt-32 pb-40'} w-full flex-col items-center justify-center px-4 md:px-20`}
           >
             {/* Section Specific Background Animation */}
             <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
               <div className={`absolute inset-0 ${isDarkMode ? 'bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.08),transparent_70%)]' : 'bg-slate-50'}`} />
-              <motion.div 
-                animate={{ 
-                  scale: [1, 1.15, 1],
-                  opacity: isDarkMode ? [0.05, 0.12, 0.05] : [0.02, 0.05, 0.02]
-                }}
-                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] ${isDarkMode ? 'bg-indigo-500/5' : 'bg-indigo-500/2'} rounded-full blur-[150px]`}
-              />
+              {!isMobile && (
+                <motion.div 
+                  animate={{ 
+                    scale: [1, 1.15, 1],
+                    opacity: isDarkMode ? [0.05, 0.12, 0.05] : [0.02, 0.05, 0.02]
+                  }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                  className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] ${isDarkMode ? 'bg-indigo-500/5' : 'bg-indigo-500/2'} rounded-full blur-[150px]`}
+                />
+              )}
             </div>
 
             <div className="max-w-6xl w-full relative z-10">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-32 items-center">
                 {/* Left Section: Text Content */}
                 <motion.div
                   initial={{ opacity: 0, x: -40 }}
@@ -1276,24 +1284,24 @@ export default function App() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="inline-flex items-center space-x-3 mb-6"
+                    className="inline-flex items-center space-x-3 mb-4 md:mb-6"
                   >
                     <div className="h-px w-8 bg-indigo-500" />
                     <span className="text-[10px] font-black uppercase tracking-[0.8em] text-indigo-500">Connection</span>
                   </motion.div>
                   
-                  <h1 className={`text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter bg-clip-text text-transparent mb-8 leading-[0.9] text-balance ${isDarkMode ? 'bg-gradient-to-br from-white via-slate-200 to-slate-400' : 'bg-gradient-to-br from-[#625FFF] via-[#8B5CF6] to-[#D946EF]'}`}>
+                  <h1 className={`text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter bg-clip-text text-transparent mb-6 md:mb-8 leading-[0.9] text-balance ${isDarkMode ? 'bg-gradient-to-br from-white via-slate-200 to-slate-400' : 'bg-gradient-to-br from-[#625FFF] via-[#8B5CF6] to-[#D946EF]'}`}>
                     Let's <span className="text-indigo-500 italic serif">Work</span> Together.
                   </h1>
                   
-                  <p className="text-slate-500 dark:text-slate-400 max-w-md text-base md:text-lg font-medium leading-relaxed opacity-100 dark:opacity-70">
+                  <p className="text-slate-500 dark:text-slate-400 max-w-md text-sm md:text-lg font-medium leading-relaxed opacity-100 dark:opacity-70">
                     I'm currently available for new projects and design collaborations. 
                     Let's build something exceptional.
                   </p>
                 </motion.div>
 
                 {/* Right Section: Contact Cards */}
-                <div className="grid grid-cols-1 gap-8">
+                <div className="grid grid-cols-1 gap-4 md:gap-8">
                   <ContactCard 
                     icon={Mail} 
                     label="Email Address" 

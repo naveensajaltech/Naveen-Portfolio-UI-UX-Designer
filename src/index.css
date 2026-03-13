@@ -8,10 +8,18 @@
   --color-navy-950: #020617;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 @layer base {
   body {
     @apply bg-slate-50 text-slate-900 antialiased selection:bg-indigo-500/30 transition-colors duration-700;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .dark body {
     @apply bg-navy-950 text-slate-200;
@@ -27,8 +35,8 @@
   /* Disable heavy blur on mobile for better performance */
   @media (max-width: 768px) {
     .glass {
-      backdrop-filter: blur(4px);
-      @apply bg-white/95 dark:bg-navy-900/90;
+      backdrop-filter: blur(2px);
+      @apply bg-white/98 dark:bg-navy-900/95;
     }
   }
 
