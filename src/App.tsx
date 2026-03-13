@@ -11,7 +11,8 @@ import {
   Instagram, Palette, ExternalLink, Layout, Type, 
   MousePointer2, Layers, Figma, PenTool, GitBranch,
   Sparkles, Grid, Activity, MonitorSmartphone, Network, User, Smartphone, Monitor,
-  ClipboardCheck, Box, Mail, Phone, Search, Compass, Accessibility, Component
+  ClipboardCheck, Box, Mail, Phone, Search, Compass, Accessibility, Component,
+  Menu, X
 } from 'lucide-react';
 
 const FloatingIcon = ({ icon: Icon, delay, x, y, size = 24, duration = 10 }: { icon: any, delay: number, x: string, y: string, size?: number, duration?: number }) => (
@@ -70,8 +71,8 @@ const services = [
   }
 ];
 
-const DomainAnimation = () => (
-  <div className="relative h-full w-full dark:bg-slate-950 bg-slate-50 flex flex-col items-center justify-center p-4 overflow-hidden">
+const DomainAnimation = ({ isMobile }: { isMobile?: boolean }) => (
+  <div className="relative h-full w-full dark:bg-slate-950 bg-slate-50 flex flex-col items-center justify-center p-4 overflow-hidden gpu">
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -100,7 +101,7 @@ const DomainAnimation = () => (
     </div>
     
     {/* Decorative particles */}
-    {[...Array(6)].map((_, i) => (
+    {[...Array(isMobile ? 3 : 6)].map((_, i) => (
       <motion.div
         key={i}
         animate={{ 
@@ -120,8 +121,8 @@ const DomainAnimation = () => (
   </div>
 );
 
-const HobbyAnimation = () => (
-  <div className="relative h-full w-full dark:bg-indigo-950/20 bg-indigo-50 flex items-center justify-center overflow-hidden">
+const HobbyAnimation = ({ isMobile }: { isMobile?: boolean }) => (
+  <div className="relative h-full w-full dark:bg-indigo-950/20 bg-indigo-50 flex items-center justify-center overflow-hidden gpu">
     <svg className="absolute inset-0 w-full h-full opacity-20">
       <defs>
         <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -134,7 +135,7 @@ const HobbyAnimation = () => (
     <div className="relative w-40 h-40">
       {/* Central Node */}
       <motion.div 
-        animate={{ scale: [1, 1.1, 1] }}
+        animate={{ scale: isMobile ? 1 : [1, 1.1, 1] }}
         transition={{ duration: 4, repeat: Infinity }}
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center z-10 shadow-[0_0_20px_rgba(99,102,241,0.5)]"
       >
@@ -152,7 +153,7 @@ const HobbyAnimation = () => (
           style={{ transform: `rotate(${angle}deg) translateY(-60px)` }}
         >
           <motion.div 
-            animate={{ y: [0, -5, 0] }}
+            animate={{ y: isMobile ? 0 : [0, -5, 0] }}
             transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
             className="w-8 h-8 rounded-full bg-white dark:bg-white/10 border border-slate-200 dark:border-white/20 flex items-center justify-center shadow-sm"
             style={{ transform: `rotate(-${angle}deg)` }}
@@ -176,8 +177,8 @@ const HobbyAnimation = () => (
   </div>
 );
 
-const VolatilityAnimation = () => (
-  <div className="relative h-full w-full dark:bg-black bg-slate-50 flex flex-col p-4 overflow-hidden">
+const VolatilityAnimation = ({ isMobile }: { isMobile?: boolean }) => (
+  <div className="relative h-full w-full dark:bg-black bg-slate-50 flex flex-col p-4 overflow-hidden gpu">
     <div className="flex justify-between items-center mb-4">
       <div className="flex space-x-2">
         <div className="w-8 h-3 bg-indigo-500/20 rounded border border-indigo-500/30" />
@@ -187,7 +188,7 @@ const VolatilityAnimation = () => (
     </div>
     
     <div className="flex-1 relative flex items-end space-x-1">
-      {[...Array(12)].map((_, i) => {
+      {[...Array(isMobile ? 6 : 12)].map((_, i) => {
         const height = 20 + Math.random() * 60;
         const isUp = Math.random() > 0.4;
         return (
@@ -199,7 +200,7 @@ const VolatilityAnimation = () => (
               className={`w-full rounded-t-sm ${isUp ? 'bg-emerald-500/40 border-emerald-500/50' : 'bg-rose-500/40 border-rose-500/50'} border-x border-t`}
             />
             <motion.div 
-              animate={{ opacity: [0.2, 0.5, 0.2] }}
+              animate={{ opacity: isMobile ? 0.3 : [0.2, 0.5, 0.2] }}
               transition={{ duration: 2, repeat: Infinity, delay: i * 0.1 }}
               className={`w-[1px] h-4 ${isUp ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-rose-600 dark:bg-rose-500'}`} 
             />
@@ -333,30 +334,33 @@ interface ServiceCardProps {
   service: any;
   index: number;
   isDarkMode: boolean;
+  isMobile: boolean;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, isDarkMode }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, isDarkMode, isMobile }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -8 }}
+      whileHover={isMobile ? {} : { y: -8 }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.23, 1, 0.32, 1] }}
       className={`group relative h-full w-full overflow-hidden rounded-[32px] border ${
         isDarkMode 
           ? 'border-white/10 dark:bg-white/[0.02]' 
           : 'border-indigo-500/30 bg-white/90 hover:border-indigo-500/5'
-      } p-6 lg:p-8 transition-all duration-500 hover:shadow-[0_20px_50px_-12px_rgba(99,102,241,0.2)] backdrop-blur-2xl flex flex-col`}
+      } p-6 lg:p-8 transition-all duration-500 hover:shadow-[0_20px_50px_-12px_rgba(99,102,241,0.2)] backdrop-blur-2xl flex flex-col gpu`}
     >
       {/* Smooth Liquid Shine Effect */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <motion.div 
-          initial={{ x: "-150%", skewX: -25 }}
-          whileHover={{ x: "250%" }}
-          transition={{ duration: 1.5, ease: [0.43, 0.13, 0.23, 0.96] }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent w-full h-full"
-        />
-      </div>
+      {!isMobile && (
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <motion.div 
+            initial={{ x: "-150%", skewX: -25 }}
+            whileHover={{ x: "250%" }}
+            transition={{ duration: 1.5, ease: [0.43, 0.13, 0.23, 0.96] }}
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent w-full h-full"
+          />
+        </div>
+      )}
 
       {/* Subtle Index Number for "Value" */}
       <div className="absolute top-6 right-8 text-[40px] font-black text-indigo-500/5 select-none transition-all duration-500 group-hover:text-indigo-500/10 group-hover:scale-110">
@@ -416,7 +420,7 @@ interface ToolCardProps {
   index: number;
 }
 
-const ToolCard: React.FC<ToolCardProps & { isDarkMode: boolean }> = ({ tool, index, isDarkMode }) => {
+const ToolCard: React.FC<ToolCardProps & { isDarkMode: boolean, isMobile: boolean }> = ({ tool, index, isDarkMode, isMobile }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -425,11 +429,11 @@ const ToolCard: React.FC<ToolCardProps & { isDarkMode: boolean }> = ({ tool, ind
         y: 0,
         transition: { delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }
       }}
-      whileHover={{ 
+      whileHover={isMobile ? {} : { 
         y: -8,
         transition: { duration: 0.4, ease: "easeOut" }
       }}
-      className={`group relative flex flex-col items-center p-4 lg:p-5 rounded-[24px] ${isDarkMode ? 'glass' : 'bg-white shadow-md'} border border-indigo-500/20 dark:border-white/5 hover:border-indigo-500/40 hover:shadow-indigo-500/20 transition-all duration-500 h-full overflow-hidden text-center shadow-lg`}
+      className={`group relative flex flex-col items-center p-4 lg:p-5 rounded-[24px] ${isDarkMode ? 'glass' : 'bg-white shadow-md'} border border-indigo-500/20 dark:border-white/5 hover:border-indigo-500/40 hover:shadow-indigo-500/20 transition-all duration-500 h-full overflow-hidden text-center shadow-lg gpu`}
     >
       {/* Background Glow on Hover */}
       <div 
@@ -456,10 +460,12 @@ const ToolCard: React.FC<ToolCardProps & { isDarkMode: boolean }> = ({ tool, ind
           </motion.div>
           
           {/* Logo Glow Effect */}
-          <div 
-            className="absolute inset-0 blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-full"
-            style={{ backgroundColor: tool.color }}
-          />
+          {!isMobile && (
+            <div 
+              className="absolute inset-0 blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-full"
+              style={{ backgroundColor: tool.color }}
+            />
+          )}
         </div>
 
         <h3 className={`text-sm lg:text-base font-black tracking-tight mb-1 transition-all duration-300 bg-clip-text text-transparent ${
@@ -491,14 +497,14 @@ interface WorkCardProps {
   index: number;
 }
 
-const WorkCard: React.FC<WorkCardProps & { isDarkMode: boolean }> = ({ project, index, isDarkMode }) => {
+const WorkCard: React.FC<WorkCardProps & { isDarkMode: boolean, isMobile: boolean }> = ({ project, index, isDarkMode, isMobile }) => {
   const isFintech = project.theme === "fintech" && isDarkMode;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.02, y: -10 }}
+      whileHover={isMobile ? {} : { scale: 1.02, y: -10 }}
       transition={{ 
         initial: { duration: 0.8, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] },
         hover: { duration: 0.4, ease: "easeOut" }
@@ -507,7 +513,7 @@ const WorkCard: React.FC<WorkCardProps & { isDarkMode: boolean }> = ({ project, 
         isFintech 
           ? 'bg-gradient-to-br from-slate-900 via-navy-950 to-black border-indigo-500/20 shadow-[0_0_40px_rgba(99,102,241,0.1)] hover:border-indigo-500/40 hover:shadow-[0_0_60px_rgba(99,102,241,0.2)]' 
           : `${isDarkMode ? 'glass' : 'bg-white shadow-xl shadow-indigo-500/5'} border-indigo-500/30 dark:border-white/5 dark:bg-gradient-to-br dark:from-white/5 dark:to-transparent hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/15`
-      } p-6 h-full w-full`}
+      } p-6 h-full w-full gpu`}
     >
       {/* Background Decoration */}
       <div className={`absolute -right-10 -top-10 h-40 w-40 rounded-full blur-[60px] transition-all duration-700 ${
@@ -516,7 +522,7 @@ const WorkCard: React.FC<WorkCardProps & { isDarkMode: boolean }> = ({ project, 
       
       {/* Animation Section */}
       <div className={`relative mb-6 overflow-hidden rounded-2xl aspect-[16/10] border ${isFintech ? 'border-white/5' : 'border-indigo-500/10 dark:border-white/5'} shadow-xl ${project.title === 'Domain Markt' ? 'bg-white/[0.03]' : 'bg-white/5'}`}>
-        <project.animation />
+        <project.animation isMobile={isMobile} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className={`absolute top-3 left-3 flex h-8 w-8 items-center justify-center rounded-lg font-black text-xs ${isFintech ? 'glass border-white/10 text-white' : 'bg-indigo-500 text-white shadow-lg'}`}>
           {project.id}
@@ -594,7 +600,7 @@ const WorkCard: React.FC<WorkCardProps & { isDarkMode: boolean }> = ({ project, 
   );
 };
 
-const ContactCard = ({ icon: Icon, label, value, href, delay, isDarkMode }: any) => {
+const ContactCard = ({ icon: Icon, label, value, href, delay, isDarkMode, isMobile }: any) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = (e: React.MouseEvent) => {
@@ -613,8 +619,8 @@ const ContactCard = ({ icon: Icon, label, value, href, delay, isDarkMode }: any)
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5 }}
-      whileHover={{ y: -5 }}
-      className={`group relative p-8 rounded-3xl ${isDarkMode ? 'glass' : 'bg-white shadow-md'} border border-indigo-500/20 dark:border-white/10 dark:bg-white/5 bg-white/90 flex flex-col items-center text-center transition-all hover:shadow-2xl hover:shadow-indigo-500/10`}
+      whileHover={isMobile ? {} : { y: -5 }}
+      className={`group relative p-8 rounded-3xl ${isDarkMode ? 'glass' : 'bg-white shadow-md'} border border-indigo-500/20 dark:border-white/10 dark:bg-white/5 bg-white/90 flex flex-col items-center text-center transition-all hover:shadow-2xl hover:shadow-indigo-500/10 gpu`}
     >
       <div className="mb-4 p-4 rounded-2xl bg-indigo-500/10 text-indigo-500 group-hover:scale-110 transition-transform duration-300">
         <Icon size={24} strokeWidth={1.5} />
@@ -637,13 +643,13 @@ const ContactCard = ({ icon: Icon, label, value, href, delay, isDarkMode }: any)
   );
 };
 
-const SocialLink = ({ icon: Icon, href, label }: any) => (
+const SocialLink = ({ icon: Icon, href, label, isMobile }: any) => (
   <motion.a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    whileHover={{ y: -3, scale: 1.1 }}
-    className="flex flex-col items-center space-y-2 group"
+    whileHover={isMobile ? {} : { y: -3, scale: 1.1 }}
+    className="flex flex-col items-center space-y-2 group gpu"
   >
     <div className="h-12 w-12 flex items-center justify-center rounded-2xl border border-indigo-500/20 dark:border-white/10 dark:bg-white/5 bg-white shadow-sm text-slate-500 dark:text-slate-400 group-hover:text-indigo-500 group-hover:border-indigo-500/30 transition-all">
       <Icon size={20} strokeWidth={1.5} />
@@ -656,6 +662,17 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeTab, setActiveTab] = useState('About');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -767,30 +784,38 @@ export default function App() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-500/10 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
         
         {/* Abstract UI Shapes */}
-        <motion.div 
-          animate={{ 
-            y: [0, -60, 0],
-            x: [0, 40, 0],
-            rotate: [0, 20, 0],
-            opacity: [0.1, 0.3, 0.1]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[10%] left-[5%] w-96 h-96 border border-indigo-500/30 rounded-[4rem] rotate-12"
-        />
-        <motion.div 
-          animate={{ 
-            y: [0, 70, 0],
-            x: [0, -50, 0],
-            rotate: [0, -25, 0],
-            opacity: [0.1, 0.2, 0.1]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[15%] right-[10%] w-[30rem] h-[30rem] border border-purple-500/20 rounded-full"
-        />
+        {!isMobile && (
+          <>
+            <motion.div 
+              animate={{ 
+                y: [0, -60, 0],
+                x: [0, 40, 0],
+                rotate: [0, 20, 0],
+                opacity: [0.1, 0.3, 0.1]
+              }}
+              transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-[10%] left-[5%] w-96 h-96 border border-indigo-500/30 rounded-[4rem] rotate-12 gpu"
+            />
+            <motion.div 
+              animate={{ 
+                y: [0, 70, 0],
+                x: [0, -50, 0],
+                rotate: [0, -25, 0],
+                opacity: [0.1, 0.2, 0.1]
+              }}
+              transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              className="absolute bottom-[15%] right-[10%] w-[30rem] h-[30rem] border border-purple-500/20 rounded-full gpu"
+            />
+          </>
+        )}
         
         {/* Floating Icons representing UI/UX Tools & Concepts */}
         <div className="absolute inset-0">
-          {[
+          {(isMobile ? [
+            { Icon: Layout, top: '15%', left: '20%', delay: 0, size: 48 },
+            { Icon: MousePointer2, top: '35%', left: '85%', delay: 1.5, size: 36 },
+            { Icon: Monitor, top: '45%', left: '5%', delay: 1, size: 52 },
+          ] : [
             { Icon: Layout, top: '15%', left: '20%', delay: 0, size: 48 },
             { Icon: Smartphone, top: '70%', left: '10%', delay: 3, size: 40 },
             { Icon: MousePointer2, top: '35%', left: '85%', delay: 1.5, size: 36 },
@@ -799,24 +824,24 @@ export default function App() {
             { Icon: Grid, top: '90%', left: '25%', delay: 5, size: 38 },
             { Icon: Monitor, top: '45%', left: '5%', delay: 1, size: 52 },
             { Icon: PenTool, top: '25%', left: '90%', delay: 6, size: 34 },
-          ].map((item, i) => (
+          ]).map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0 }}
               animate={{ 
                 opacity: [0.3, 0.6, 0.3],
-                y: [0, -50, 0],
-                x: [0, Math.sin(i) * 20, 0],
-                rotate: [0, 360, 0]
+                y: [0, isMobile ? -20 : -50, 0],
+                x: [0, Math.sin(i) * (isMobile ? 10 : 20), 0],
+                rotate: isMobile ? 0 : [0, 360, 0]
               }}
               transition={{ 
-                duration: 12 + i * 2, 
+                duration: isMobile ? 8 : 12 + i * 2, 
                 repeat: Infinity, 
                 ease: "easeInOut",
                 delay: item.delay 
               }}
               style={{ top: item.top, left: item.left }}
-              className="absolute text-indigo-500/50 drop-shadow-[0_0_10px_rgba(99,102,241,0.2)]"
+              className="absolute text-indigo-500/50 drop-shadow-[0_0_10px_rgba(99,102,241,0.2)] gpu"
             >
               <item.Icon size={item.size} strokeWidth={1} />
             </motion.div>
@@ -834,29 +859,41 @@ export default function App() {
       </div>
 
       {/* Navigation Bar */}
-      <div className="fixed top-5 left-0 z-40 w-full px-6 md:px-10">
-        <nav className={`mx-auto flex max-w-fit items-center space-x-6 md:space-x-8 px-6 py-2.5 rounded-full ${isDarkMode ? 'glass' : 'bg-white shadow-lg'} border-slate-300 dark:border-white/5 shadow-2xl shadow-indigo-500/20 dark:shadow-black/20`}>
-          {/* Center Links */}
-          <div className="flex items-center space-x-4 md:space-x-8">
-            {navLinks.map((link) => (
-              <button
-                key={link}
-                onClick={() => setActiveTab(link)}
-                className="group relative px-1 py-0.5 text-[10px] md:text-[11px] font-bold uppercase tracking-wider transition-colors"
-              >
-                <span className={`transition-all duration-300 ${activeTab === link ? 'text-indigo-500 dark:text-indigo-400' : 'text-slate-500 dark:text-slate-500 group-hover:text-indigo-400'}`}>
-                  {link}
-                </span>
-                {activeTab === link && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute -bottom-1 left-0 h-[1.5px] w-full bg-indigo-500 dark:bg-indigo-400"
-                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
+      <div className="fixed top-5 left-0 z-50 w-full px-6 md:px-10">
+        <nav className={`mx-auto flex max-w-fit items-center space-x-4 md:space-x-8 px-4 md:px-6 py-2.5 rounded-full ${isDarkMode ? 'glass' : 'bg-white shadow-lg'} border-slate-300 dark:border-white/5 shadow-2xl shadow-indigo-500/20 dark:shadow-black/20`}>
+          {/* Mobile Menu Toggle */}
+          {isMobile && (
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-indigo-500/20 dark:border-white/10 bg-white/80 dark:bg-white/5 transition-all"
+            >
+              {isMenuOpen ? <X size={16} className="text-indigo-500" /> : <Menu size={16} className="text-indigo-500" />}
+            </button>
+          )}
+
+          {/* Center Links - Hidden on Mobile */}
+          {!isMobile && (
+            <div className="flex items-center space-x-4 md:space-x-8">
+              {navLinks.map((link) => (
+                <button
+                  key={link}
+                  onClick={() => setActiveTab(link)}
+                  className="group relative px-1 py-0.5 text-[10px] md:text-[11px] font-bold uppercase tracking-wider transition-colors"
+                >
+                  <span className={`transition-all duration-300 ${activeTab === link ? 'text-indigo-500 dark:text-indigo-400' : 'text-slate-500 dark:text-slate-500 group-hover:text-indigo-400'}`}>
+                    {link}
+                  </span>
+                  {activeTab === link && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute -bottom-1 left-0 h-[1.5px] w-full bg-indigo-500 dark:bg-indigo-400"
+                      transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Theme Toggle */}
           <button
@@ -888,6 +925,54 @@ export default function App() {
         </nav>
       </div>
 
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobile && isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-30 flex items-center justify-center px-6 pt-24 pb-12"
+          >
+            <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-xl" onClick={() => setIsMenuOpen(false)} />
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className={`relative w-full max-w-sm rounded-[40px] p-8 ${isDarkMode ? 'glass' : 'bg-white'} border border-indigo-500/20 dark:border-white/10 shadow-2xl overflow-hidden`}
+            >
+              <div className="flex flex-col space-y-6">
+                {navLinks.map((link, i) => (
+                  <motion.button
+                    key={link}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    onClick={() => {
+                      setActiveTab(link);
+                      setIsMenuOpen(false);
+                    }}
+                    className="group flex items-center justify-between w-full text-left"
+                  >
+                    <span className={`text-2xl font-black tracking-tight transition-all ${activeTab === link ? 'text-indigo-500' : 'text-slate-500 dark:text-slate-400'}`}>
+                      {link}
+                    </span>
+                    <ArrowRight className={`h-5 w-5 transition-all ${activeTab === link ? 'text-indigo-500 translate-x-0' : 'text-slate-300 dark:text-slate-700 -translate-x-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0'}`} />
+                  </motion.button>
+                ))}
+              </div>
+              
+              <div className="mt-12 pt-8 border-t border-indigo-500/10 dark:border-white/5">
+                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-500 mb-4">Connect</p>
+                <div className="flex space-x-4">
+                  <SocialLink icon={Linkedin} href="https://www.linkedin.com/company/sajaltech/" label="LinkedIn" isMobile={isMobile} />
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Main Content */}
       <AnimatePresence mode="wait">
         {activeTab === 'About' && (
@@ -903,10 +988,10 @@ export default function App() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className={`${isDarkMode ? 'glass' : 'bg-white'} relative flex flex-col items-center max-w-5xl w-full py-6 md:py-10 px-8 md:px-16 rounded-[40px] text-center overflow-hidden shadow-2xl shadow-indigo-500/10 dark:shadow-black/40 group border border-indigo-500/20 dark:border-white/10`}
+              className={`${isDarkMode ? 'glass' : 'bg-white'} relative flex flex-col items-center max-w-5xl w-full py-6 md:py-10 px-8 md:px-16 rounded-[40px] text-center overflow-hidden shadow-2xl shadow-indigo-500/10 dark:shadow-black/40 group border border-indigo-500/20 dark:border-white/10 gpu`}
             >
               {/* Liquid Glass Shine Effect on Border Strokes - Dark Mode Only */}
-              {isDarkMode && (
+              {isDarkMode && !isMobile && (
                 <div className="absolute inset-0 rounded-[40px] border border-white/10 pointer-events-none overflow-hidden z-20">
                   <motion.div 
                     animate={{ 
@@ -924,7 +1009,7 @@ export default function App() {
               )}
 
               {/* Eye Cooling Gradient Animation - Dark Mode Only */}
-              {isDarkMode && (
+              {isDarkMode && !isMobile && (
                 <motion.div 
                   animate={{ 
                     background: [
@@ -937,6 +1022,11 @@ export default function App() {
                   transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
                   className="absolute inset-0 pointer-events-none"
                 />
+              )}
+              
+              {/* Static fallback for mobile background */}
+              {isDarkMode && isMobile && (
+                <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.05)_0%,transparent_70%)]" />
               )}
               
               {/* Status Badge */}
@@ -1044,7 +1134,7 @@ export default function App() {
             <div className="flex-1 min-h-0 overflow-y-auto pr-2 custom-scrollbar">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
                 {projects.map((project, index) => (
-                  <WorkCard key={project.title} project={project} index={index} isDarkMode={isDarkMode} />
+                  <WorkCard key={project.title} project={project} index={index} isDarkMode={isDarkMode} isMobile={isMobile} />
                 ))}
               </div>
             </div>
@@ -1079,7 +1169,7 @@ export default function App() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 max-w-7xl mx-auto w-full">
                 {services.map((service, index) => (
                   <div key={service.title} className="h-[180px] lg:h-[220px]">
-                    <ServiceCard service={service} index={index} isDarkMode={isDarkMode} />
+                    <ServiceCard service={service} index={index} isDarkMode={isDarkMode} isMobile={isMobile} />
                   </div>
                 ))}
               </div>
@@ -1144,7 +1234,7 @@ export default function App() {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 lg:gap-6 max-w-6xl mx-auto w-full">
                 {tools.map((tool, index) => (
                   <div key={tool.name} className="h-[160px] lg:h-[180px]">
-                    <ToolCard tool={tool} index={index} isDarkMode={isDarkMode} />
+                    <ToolCard tool={tool} index={index} isDarkMode={isDarkMode} isMobile={isMobile} />
                   </div>
                 ))}
               </div>
@@ -1211,6 +1301,7 @@ export default function App() {
                     href="mailto:contact@sajaltech.com"
                     delay={0.3}
                     isDarkMode={isDarkMode}
+                    isMobile={isMobile}
                   />
                   <ContactCard 
                     icon={Phone} 
@@ -1219,6 +1310,7 @@ export default function App() {
                     href="tel:+919876543210"
                     delay={0.4}
                     isDarkMode={isDarkMode}
+                    isMobile={isMobile}
                   />
                 </div>
               </div>
@@ -1238,15 +1330,12 @@ export default function App() {
           >
             <div className="flex items-center space-x-6 px-6 py-3 rounded-full glass border-indigo-500/20 dark:border-white/10 shadow-2xl pointer-events-auto backdrop-blur-2xl">
               <div className="flex items-center space-x-6">
-                <motion.a
-                  href="https://www.linkedin.com/company/sajaltech/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -3, scale: 1.1 }}
-                  className="text-slate-700 dark:text-slate-400 hover:text-indigo-400 transition-colors"
-                >
-                  <Linkedin size={20} strokeWidth={1.5} />
-                </motion.a>
+                <SocialLink 
+                  icon={Linkedin} 
+                  href="https://www.linkedin.com/company/sajaltech/" 
+                  label="LinkedIn" 
+                  isMobile={isMobile} 
+                />
               </div>
             </div>
           </motion.div>
