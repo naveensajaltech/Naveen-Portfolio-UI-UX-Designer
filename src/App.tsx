@@ -513,7 +513,7 @@ const WorkCard: React.FC<WorkCardProps & { isDarkMode: boolean, isMobile: boolea
         isFintech 
           ? 'bg-gradient-to-br from-slate-900 via-navy-950 to-black border-indigo-500/20 shadow-[0_0_40px_rgba(99,102,241,0.1)] hover:border-indigo-500/40 hover:shadow-[0_0_60px_rgba(99,102,241,0.2)]' 
           : `${isDarkMode ? 'glass' : 'bg-white shadow-xl shadow-indigo-500/5'} border-indigo-500/30 dark:border-white/5 dark:bg-gradient-to-br dark:from-white/5 dark:to-transparent hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/15`
-      } p-6 h-full w-full gpu`}
+      } p-6 w-full gpu`}
     >
       {/* Background Decoration */}
       <div className={`absolute -right-10 -top-10 h-40 w-40 rounded-full blur-[60px] transition-all duration-700 ${
@@ -1116,7 +1116,7 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: isMobile ? 0.3 : 0.5 }}
-            className={`relative z-10 flex ${isMobile ? 'min-h-screen pt-24 pb-12' : 'h-screen pt-20 pb-12'} w-full overflow-hidden px-4 md:px-20 flex-col`}
+            className={`relative z-10 flex min-h-screen ${isMobile ? 'pt-24' : 'pt-20'} pb-12 w-full overflow-visible px-4 md:px-20 flex-col`}
           >
             {/* Header */}
             <motion.div 
@@ -1134,7 +1134,7 @@ export default function App() {
             </motion.div>
 
             {/* Works Grid */}
-            <div className={`flex-1 ${isMobile ? 'overflow-visible' : 'min-h-0 overflow-y-auto'} pr-2 custom-scrollbar`}>
+            <div className="flex-1 overflow-visible">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {projects.map((project, index) => (
                   <WorkCard key={project.title} project={project} index={index} isDarkMode={isDarkMode} isMobile={isMobile} />
